@@ -1,0 +1,13 @@
+#!/bin/bash -l
+
+#$ -P bf528
+#$ -cwd
+#$ -pe omp 16
+#$ -o /projectnb/bf528/users/dreadlocks/project_4/curator/run_log/run_salmon_index_o
+#$ -e /projectnb/bf528/users/dreadlocks/project_4/curator/run_log/run_salmon_index_e 
+
+module load salmon/1.1.0
+
+FILEPATH=/projectnb/bf528/users/dreadlocks/project_4/curator/data/ref
+
+salmon index -t $FILEPATH/gentrome.fa.gz -d $FILEPATH/decoys.txt -p 16 -i salmon_index --gencode

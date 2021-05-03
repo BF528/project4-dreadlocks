@@ -1,0 +1,24 @@
+#!/bin/bash -l
+
+#$ -P bf528
+#$ -cwd
+#$ -pe omp 16
+#$ -o /projectnb/bf528/users/dreadlocks/project_4/curator/run_log/run_salmon_count1_o
+#$ -e /projectnb/bf528/users/dreadlocks/project_4/curator/run_log/run_salmon_count1_e
+
+module load salmon/1.1.0
+
+FILEPATH=/projectnb/bf528/users/dreadlocks/project_4/curator
+FASTQPATH=/projectnb/bf528/users/dreadlocks/project_4/curator/data/fastq
+
+salmon alevin -l ISR -1 $FASTQPATH/SRR3879601/SRR3879601_1_bc.fastq.gz \
+$FASTQPATH/SRR3879602/SRR3879602_1_bc.fastq.gz \
+$FASTQPATH/SRR3879603/SRR3879603_1_bc.fastq.gz \
+-2 $FASTQPATH/SRR3879601/SRR3879601_2.fastq.gz \
+$FASTQPATH/SRR3879602/SRR3879602_2.fastq.gz \
+$FASTQPATH/SRR3879603/SRR3879603_2.fastq.gz \
+-i $FILEPATH/salmon_index/ -p 16 -o $FILEPATH/result/salmon_count/GSM2230757 \
+--tgMap $FILEPATH/data/ref/tgMap.tsv \
+--whitelist $FILEPATH/result/barcode_count/GSM2230757_wl.csv \
+--end 5 --barcodeLength 19 --umiLength 6
+

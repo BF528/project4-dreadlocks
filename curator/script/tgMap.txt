@@ -1,0 +1,1 @@
+zcat gencode.v37.transcripts.fa.gz | awk '$1 ~ /^>/{print substr($1,2)}'| awk '{split($1,a,"|"); print a[1],'\t',a[2]}'> tgMap.tsv

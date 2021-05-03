@@ -1,0 +1,13 @@
+#!/bin/bash 
+
+#$ -P bf528
+#$ -cwd
+#$ -pe omp 16
+#$ -o /projectnb/bf528/users/dreadlocks/project_4/curator/run_log/run_c_b.o
+#$ -e /projectnb/bf528/users/dreadlocks/project_4/curator/run_log/run_c_b.e
+
+FILEPATH=/projectnb/bf528/users/dreadlocks/project_4/curator
+SAVENAME=$(basename "$1".txt)
+
+zcat $FILEPATH/data/fastq/$1 | awk 'NR%4==1{$2 = substr($2,5)}{$3 = substr($3,5)}{print $2$3}' | sort | uniq -c > $FILEPATH/result/$SAVENAME 
+ 
